@@ -1,5 +1,6 @@
 import path from 'path';
 import lodash from 'lodash';
+import resolvePkg from 'resolve-pkg';
 import { readJSON, getScripts } from '../utils';
 
 const metadataCache = {};
@@ -16,11 +17,14 @@ function getCacheOrRequire(packagePath) {
 
 function loadMetadata(dep, dir) {
   try {
-    const packagePath = path.resolve(dir, 'node_modules', dep, 'package.json');
-    return getCacheOrRequire(packagePath);
+    const packagePath = resolvePkg(dep, { cwd: dir });
+    if (packagePath) {
+      return getCacheOrRequire(path.resolve(packagePath, 'package.json'));
+    }
   } catch (error) {
-    return {}; // ignore silently
+    // ignore silently
   }
+  return {};
 }
 
 function getBinaryFeatures(dep, [key, value]) {

@@ -57,6 +57,7 @@
     "lodash": "^4.5.1",
     "minimatch": "^3.0.2",
     "require-package-name": "^2.0.1",
+    "resolve-pkg": "^1.0.0",
     "walkdir": "0.0.11",
     "yargs": "^8.0.2"
   },
